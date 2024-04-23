@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: "Exo";
+  src: url("assets/fonts/Exo-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 800; // Assuming it supports weights from 100 to 800
+}
+
+body {
+    font-family: 'Exo', sans-serif;
+    font-weight: 400; /* Regular */
+    margin: 0;
+    padding: 0;
+}
