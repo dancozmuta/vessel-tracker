@@ -1,0 +1,25 @@
+:root {
+  /* Base Neutral Colors */
+  --color-white: #ffffff; /* Pure White, commonly used for backgrounds and text */
+  --color-dark: #04060f; /* Spire Dark, suitable for text and contrast elements */
+  --color-gray: #f2f2f2; /* Gray6, used for backgrounds and subtle UI elements */
+
+  /* Brand Colors */
+  --color-primary: #be0000; /* Spire Red changed because ther provided color #e2e2e2 was a gray */
+  --color-secondary: #0f447a; /* Black Sapphire, secondary color for less emphasized UI components */
+  --color-accent: #008081; /* Polar Teal, used for accentuating elements that need to stand out */
+  --color-supportive: #00806c; /* Mindful Green, supportive color for additional UI highlights */
+
+  /* Action Colors */
+  --color-cta-normal: var(
+    --color-primary
+  ); /* Color for primary call-to-action elements */
+  --color-cta-hover: var(
+    --color-dark
+  ); /* Color for hover states of call-to-action elements */
+
+  /* Additional Semantic Colors */
+  --color-background: var(--color-white); /* Default background color */
+  --color-text: var(--color-dark); /* Primary text color */
+  --color-text-light: var(--color-white); /* Text color for dark backgrounds */
+}

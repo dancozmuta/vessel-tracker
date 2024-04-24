@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from "./header/header.component";
+import { HeaderComponent } from "./components/header/header.component";
+import { MapComponent } from "./components/map/map.component";
+
+import { HttpClientModule } from '@angular/common/http';
+import { VesselService } from './services/vessel.service';
 
 @Component({
     selector: 'app-root',
@@ -8,10 +12,22 @@ import { HeaderComponent } from "./header/header.component";
     templateUrl: './app.component.html',
     styleUrl: './app.component.scss',
     imports: [
-      RouterOutlet, 
-      HeaderComponent
+        RouterOutlet,
+        HeaderComponent,
+        MapComponent,
+        HttpClientModule
     ]
 })
-export class AppComponent {
-  title = 'vessel-tracker';
+
+export class AppComponent implements OnInit {
+  title = 'Vessel Tracker';
+
+  constructor(private vesselService: VesselService) {}
+
+  ngOnInit() {
+    this.vesselService.getVessels().subscribe({
+      next: (data) => console.log('Data fetched:', data),
+      error: (error) => console.error('Error fetching data:', error)
+    });
+  }
 }

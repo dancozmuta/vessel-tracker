@@ -1,0 +1,8 @@
+{
+  "/graphql": {
+    "target": "https://api.spire.com",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}
