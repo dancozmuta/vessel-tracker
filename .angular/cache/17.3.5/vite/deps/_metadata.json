@@ -1,37 +1,37 @@
 {
-  "hash": "e1bb8cb0",
+  "hash": "99754274",
   "configHash": "f0ccabdd",
-  "lockfileHash": "36b4b964",
-  "browserHash": "3cb8dd86",
+  "lockfileHash": "0b964ce3",
+  "browserHash": "d5b3e8b5",
   "optimized": {
     "@angular/common/http": {
       "src": "../../../../../node_modules/@angular/common/fesm2022/http.mjs",
       "file": "@angular_common_http.js",
-      "fileHash": "60d5e1d9",
+      "fileHash": "faf9766c",
       "needsInterop": false
     },
     "@angular/core": {
       "src": "../../../../../node_modules/@angular/core/fesm2022/core.mjs",
       "file": "@angular_core.js",
-      "fileHash": "4c39db83",
+      "fileHash": "1556f809",
       "needsInterop": false
     },
     "@angular/platform-browser": {
       "src": "../../../../../node_modules/@angular/platform-browser/fesm2022/platform-browser.mjs",
       "file": "@angular_platform-browser.js",
-      "fileHash": "8d24f5a7",
+      "fileHash": "8e957999",
       "needsInterop": false
     },
     "@angular/router": {
       "src": "../../../../../node_modules/@angular/router/fesm2022/router.mjs",
       "file": "@angular_router.js",
-      "fileHash": "32c0fd9c",
+      "fileHash": "f6e10fd6",
       "needsInterop": false
     },
     "leaflet": {
       "src": "../../../../../node_modules/leaflet/dist/leaflet-src.js",
       "file": "leaflet.js",
-      "fileHash": "ab82e7ac",
+      "fileHash": "4adfb541",
       "needsInterop": true
     }
   },

@@ -6,36 +6,52 @@ import { Observable, catchError, of, tap } from "rxjs";
   providedIn: "root",
 })
 export class VesselService {
-  private apiUrl = "https://api.spire.com/graphql"; // GraphQL API endpoint
 
   constructor(private http: HttpClient) {}
 
   // Use a relative URL for the GraphQL endpoint
-  getVessels(): Observable<any> {
+  getVessels(flag?: string[], shipType?: string[]): Observable<any> {
     return this.http.post(
       "/graphql",
       {
         query: `
-      {
-        vessels(first: 5) {
-          nodes {
-            id
-            staticData {
-              name
-              mmsi
-              imo
-            }
-            lastPositionUpdate {
-              timestamp
-              latitude
-              longitude
-              collectionType
+        query GetVessels($flag: [String!], $shipType: [ShipType!]) {
+          vessels(first: 15, flag: $flag, shipType: $shipType) {
+            nodes {
+              id
+              staticData {
+                name
+                mmsi
+                imo
+                aisClass
+                flag
+                callsign
+                dimensions {
+                  length
+                  width
+                }
+                shipType
+              }
+              lastPositionUpdate {
+                timestamp
+                latitude
+                longitude
+                collectionType
+              }
+              currentVoyage {
+                destination
+                draught
+                eta
+                updateTimestamp
+              }
             }
           }
         }
-      }
-    `,
-        variables: {},
+        `,
+        variables: {
+          flag: flag,
+          shipType: shipType
+        }
       },
       {
         headers: new HttpHeaders({

@@ -1,12 +1,19 @@
 :host {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 auto;
+  position: fixed;
+  z-index: 1000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--color-background);
   padding: 20px;
-  box-shadow: 0 0 5px -1px rgba(0, 0, 0, .5);
+  border-bottom: 2px solid var(--color-accent);
 
   img {
-    height: 33px;
+    height: 25px;
+  }
+
+  a {
+    display: flex;
+    align-items: center;
   }
 }

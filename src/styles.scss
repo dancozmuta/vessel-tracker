@@ -1,15 +1,41 @@
 @font-face {
   font-family: "Exo";
   src: url("assets/fonts/Exo-VariableFont_wght.ttf") format("truetype");
-  font-weight: 100 800; 
+  font-weight: 100 800;
 }
 @import "./variables";
 
 body {
-    font-family: 'Exo', sans-serif;
-    font-weight: 400; /* Regular */
-    letter-spacing: .02em;
-    margin: 0;
-    padding: 0;
-    background-color: var(--color-gray);
+  font-family: "Exo", sans-serif;
+  font-weight: 400; /* Regular */
+  letter-spacing: 0.02em;
+  margin: 0;
+  background-color: var(--color-gray);
+  height: 100vh;
+  overflow: hidden;
+
+  #map {
+    .leaflet-div-icon {
+      background-color: transparent;
+      border: none;
+    }
+
+    .leaflet-icon-container {
+      display: flex;
+      background-color: transparent;
+      align-items: center;
+
+      span {
+        text-transform: none;
+        color: var(--color-accent);
+        line-height: 1;
+        margin-left: 5px;
+        font-weight: bold;
+      }
+
+      img {
+        width: 38px;
+      }
+    }
+  }
 }

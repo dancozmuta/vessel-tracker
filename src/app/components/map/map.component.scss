@@ -1,7 +1,15 @@
 :host {
+  display: block;
+  position: absolute;
+  top: 67px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  overflow: auto;
+
   .map-container {
-    height: 400px;
-    padding: 20px;
+    height: calc(100vh - 76px);
+    width: 100%;
   }
 
   #map {
