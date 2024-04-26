@@ -12,6 +12,9 @@ import { Vessel } from "../../models/vessel.interface";
 })
 export class MapComponent implements OnInit {
   private map: L.Map | undefined;
+  // Properties to store selected filter values
+  selectedCountry: string | undefined;
+  selectedShipType: string | undefined;
 
   constructor(private vesselService: VesselService) {}
 
@@ -24,11 +27,13 @@ export class MapComponent implements OnInit {
     this.map = L.map("map", {
       center: [10, 0],
       zoom: 2,
+      minZoom: 2,
+      attributionControl: false
     });
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
-      attribution: "© OpenStreetMap",
+      /* attribution: "© Spire", */
     }).addTo(this.map);
   }
 
@@ -73,7 +78,10 @@ export class MapComponent implements OnInit {
         <strong>Country:</strong> ${vessel.staticData.flag}<br>
         <strong>Call Sign:</strong> ${vessel.staticData.callsign}<br>
         <strong>Dimensions:</strong> Length: ${vessel.staticData.dimensions.length}m, Width: ${vessel.staticData.dimensions.width}m<br>
-        <strong>Last Known Position:</strong> ${new Date(vessel.lastPositionUpdate.timestamp).toLocaleString()}<br>
+        <strong>Last update:</strong> ${new Date(vessel.lastPositionUpdate.timestamp).toLocaleString()}<br>
+        <strong>Last Known Position:</strong> latitude: ${vessel.lastPositionUpdate.latitude}
+        longitude: ${vessel.lastPositionUpdate.longitude}
+        <br>
         <strong>Destination:</strong> ${vessel.currentVoyage.destination || 'N/A'}<br>
         <strong>ETA:</strong> ${vessel.currentVoyage.eta ? new Date(vessel.currentVoyage.eta).toLocaleString() : 'N/A'}<br>
       </div>
