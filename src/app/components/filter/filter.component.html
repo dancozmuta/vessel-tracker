@@ -1,0 +1,11 @@
+<div class="filter-container">
+    <label for="ship-type-select">Select Ship Type:</label>
+    <select id="ship-type-select" (change)="onShipTypeChange($event)">
+      <option value="">All</option>
+      <option *ngFor="let shipType of shipTypes" [value]="shipType.originalType">
+        {{ shipType.formattedType }} ({{ shipType.count }})
+      </option>
+      
+    </select>
+  </div>
+  

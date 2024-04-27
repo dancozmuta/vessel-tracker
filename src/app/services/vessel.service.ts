@@ -61,4 +61,8 @@ export class VesselService {
       }
     );
   }
+
+  formatShipType(shipType: string): string {
+    return shipType.toLowerCase().split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  }
 }

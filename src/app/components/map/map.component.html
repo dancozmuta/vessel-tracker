@@ -1,5 +1,8 @@
 <div class="map-container">
     <div class="map-filter--container">
+        <!-- <app-filter (countryChanged)="onCountryChange($event)" (shipTypeChanged)="onShipTypeChange($event)"></app-filter> -->
+
+        <app-filter (shipTypeChanged)="onShipTypeChange($event)"></app-filter>
     </div>
     <div id="map"></div>
   </div>
