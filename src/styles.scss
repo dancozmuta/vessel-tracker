@@ -4,6 +4,9 @@
   font-weight: 100 800;
 }
 @import "./variables";
+:root {
+  --delay-time: 0.5s;
+}
 
 body {
   font-family: "Exo", sans-serif;
@@ -20,22 +23,80 @@ body {
       border: none;
     }
 
-    .leaflet-icon-container {
-      display: flex;
-      background-color: transparent;
-      align-items: center;
+    .enlarged-marker {
+      svg {
+        transform: scale(1.5); /* Adjust scale as needed */
+        transition: transform 0.3s ease;
+      }
 
       span {
-        text-transform: none;
-        color: var(--color-accent);
-        line-height: 1;
-        margin-left: 5px;
-        font-weight: bold;
-      }
-
-      img {
-        width: 38px;
+        transition: transform 0.3s ease;
+        display: none;
       }
     }
+
+    .leaflet-marker-icon {
+      width: max-content !important;
+
+      .leaflet-icon-container {
+        animation: drop 0.3s linear forwards;
+
+        /* &:active svg {
+          transform: scale(1.5); 
+        } */
+
+        display: flex;
+        background-color: transparent;
+        align-items: center;
+        cursor: pointer;
+
+        span {
+          text-transform: none;
+          color: var(--color-accent);
+          line-height: 1;
+          margin-left: 5px;
+          font-weight: bold;
+          max-width: 110px;
+        }
+
+        svg {
+          z-index: 200;
+          width: 38px;
+          filter: drop-shadow(2px 2px 2px rgb(0 0 0 / 0.4));
+          transition: transform 0.3s ease;
+          display: block;
+          margin: auto;
+        }
+      }
+    }
+  }
+}
+.drop {
+  animation: drop 0.3s linear forwards;
+}
+
+@keyframes drop {
+  0% {
+    transform: translateY(-200px) scaleY(0.9);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(0px) scaleY(1);
+    opacity: 1;
+  }
+  65% {
+    transform: translateY(-17px) scaleY(0.9);
+    opacity: 1;
+  }
+  75% {
+    transform: translateY(-22px) scaleY(0.9);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(0px) scaleY(1);
+    opacity: 1;
   }
 }
