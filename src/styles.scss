@@ -35,6 +35,10 @@ body {
       }
     }
 
+    .leaflet-popup-tip-container {
+      display: none;
+    }
+
     .leaflet-marker-icon {
       width: max-content !important;
 
