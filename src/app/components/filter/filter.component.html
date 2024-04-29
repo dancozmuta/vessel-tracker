@@ -1,11 +1,21 @@
+<!-- Filter Component HTML -->
 <div class="filter-container">
-    <label for="ship-type-select">Select Ship Type:</label>
-    <select id="ship-type-select" (change)="onShipTypeChange($event)">
-      <option value="">All</option>
-      <option *ngFor="let shipType of shipTypes" [value]="shipType.originalType">
-        {{ shipType.formattedType }} ({{ shipType.count }})
-      </option>
-      
-    </select>
+    <label>Ship Types:</label>
+    <div>
+        <input type="radio" id="all-types" name="shipType"
+               value="all"
+               [(ngModel)]="selectedShipType"
+               (change)="shipTypeChanged.emit('all')">
+        <label for="all-types">All</label>
+    </div>
+    <div *ngFor="let shipType of shipTypes">
+        <input type="radio" id="{{ shipType.originalType }}" name="shipType"
+               [value]="shipType.originalType"
+               [(ngModel)]="selectedShipType" 
+               (change)="shipTypeChanged.emit(selectedShipType)"> <!-- Emitting selectedShipType on change -->
+        <label for="{{ shipType.originalType }}">
+          {{ shipType.formattedType }} ({{ shipType.count }})
+        </label>
+      </div>
   </div>
   

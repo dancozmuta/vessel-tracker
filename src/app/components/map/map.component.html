@@ -1,8 +1,23 @@
 <div class="map-container">
-    <div class="map-filter--container">
-        <!-- <app-filter (countryChanged)="onCountryChange($event)" (shipTypeChanged)="onShipTypeChange($event)"></app-filter> -->
-
-        <app-filter (shipTypeChanged)="onShipTypeChange($event)"></app-filter>
-    </div>
-    <div id="map"></div>
+  <!--  <div class="map-filter--container">
+    <app-filter (countryChanged)="onCountryChange($event)" (shipTypeChanged)="onShipTypeChange($event)"></app-filter>
+    <app-filter (shipTypeChanged)="onShipTypeChange($event)"></app-filter>
+  </div> -->
+  <app-button
+    [iconSrc]="'assets/images/icon_filter.svg'"
+    [customClass]="'button-filter'"
+    [isShown]="showFilters"
+    [showText]="'Show'"
+    [hideText]="'Hide'"
+    (toggle)="handleToggle($event)"
+  >
+  </app-button>
+  <div class="map-filter--container" *ngIf="showFilters">
+    <app-filter
+      [shipTypes]="shipTypes"
+      [selectedType]="selectedShipType"
+      (shipTypeChanged)="handleShipTypeChange($event)"
+    ></app-filter>
   </div>
+  <div id="map"></div>
+</div>

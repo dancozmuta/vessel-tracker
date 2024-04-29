@@ -1,28 +1,36 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import * as L from "leaflet";
 import { VesselService } from "../../services/vessel.service";
 import { Vessel } from "../../models/vessel.interface";
 import { FilterComponent } from "../filter/filter.component";
 import { FormsModule } from "@angular/forms";
+import { ButtonComponent } from "../button/button.component";
+import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "app-map",
   standalone: true,
   templateUrl: "./map.component.html",
   styleUrl: "./map.component.scss",
-  imports: [FilterComponent, FormsModule],
+  imports: [FilterComponent, FormsModule, ButtonComponent, CommonModule],
 })
 export class MapComponent implements OnInit {
   private map: L.Map | undefined;
   private markers: L.Marker[] = [];
   private allVessels: Vessel[] = []; // Store all vessels data here
-  selectedShipType: string | undefined;
+  selectedShipType: string = "all";
+  showFilters: boolean = false;
+  @Output() shipTypesAvailable = new EventEmitter<
+    { formattedType: string; originalType: string; count: number }[]
+  >();
+  shipTypes: { formattedType: string; originalType: string; count: number }[] =
+    [];
 
   constructor(private vesselService: VesselService) {}
 
   ngOnInit() {
     this.initMap();
-    this.fetchVessels();
+    this.fetchVesselsAndTypes(); // Fetch vessels and ship types once
   }
 
   private initMap(): void {
@@ -38,14 +46,50 @@ export class MapComponent implements OnInit {
     }).addTo(this.map);
   }
 
-  private fetchVessels(): void {
+  handleToggle(isShown: boolean): void {
+    this.showFilters = isShown;
+    // Set selected types in FilterComponent when filters are shown
+    if (isShown) {
+    }
+  }
+
+  private fetchVesselsAndTypes(): void {
     this.vesselService.getVessels().subscribe({
       next: (data) => {
         this.allVessels = data.data.vessels.nodes;
-        this.addVesselMarkers(); // Initially add all markers
+        this.extractAndEmitShipTypes(this.allVessels);
+        this.addVesselMarkers();
       },
       error: (err) => console.error("Failed to load vessel data:", err),
     });
+  }
+
+  private extractAndEmitShipTypes(vessels: Vessel[]): void {
+    const shipTypeCounts: {
+      [key: string]: { formattedType: string; count: number };
+    } = {};
+    vessels.forEach((vessel) => {
+      const type = vessel.staticData.shipType;
+      if (type) {
+        if (!shipTypeCounts[type]) {
+          shipTypeCounts[type] = {
+            formattedType: this.vesselService.formatShipType(type),
+            count: 0,
+          };
+        }
+        shipTypeCounts[type].count++;
+      }
+    });
+
+    this.shipTypes = Object.entries(shipTypeCounts).map(
+      ([originalType, { formattedType, count }]) => ({
+        originalType,
+        formattedType,
+        count,
+      })
+    );
+
+    this.shipTypesAvailable.emit(this.shipTypes);
   }
 
   private clearMarkers(): void {
@@ -78,9 +122,38 @@ export class MapComponent implements OnInit {
     }
   }
 
-  onShipTypeChange(shipType: string) {
-    this.selectedShipType = shipType;
-    this.addVesselMarkers(shipType); // Re-add markers based on selected ship type
+  handleShipTypeChange(newType: string): void {
+    this.selectedShipType = newType;
+    this.updateMapMarkers();
+  }
+
+  handleFilterVisibilityChange(isShown: boolean): void {
+    this.showFilters = isShown;
+    if (!isShown) {
+      // Update map markers when filters are hidden
+      this.updateMapMarkers();
+    }
+  }
+
+  updateMapMarkers(): void {
+    this.clearMarkers();
+    let bounds: L.LatLngBounds | null = null;
+  
+    this.allVessels.forEach((vessel) => {
+      if (this.selectedShipType === 'all' || vessel.staticData.shipType === this.selectedShipType) {
+        const lat = vessel.lastPositionUpdate.latitude;
+        const lon = vessel.lastPositionUpdate.longitude;
+        const marker = this.addMarker(lat, lon, vessel);
+        if (marker) {
+          this.markers.push(marker);
+          bounds = bounds ? bounds.extend(marker.getLatLng()) : L.latLngBounds(marker.getLatLng(), marker.getLatLng());
+        }
+      }
+    });
+  
+    if (bounds && this.map && this.markers.length > 0) {
+      this.map.fitBounds(bounds, { padding: [50, 50], maxZoom: 12 });
+    }
   }
 
   private addMarker(
@@ -169,28 +242,44 @@ export class MapComponent implements OnInit {
       <div class="vessel-popup__item vessel-popup__item--dimensions">
         <span class="vessel-popup__label">Dimensions:</span>
         <div class="vessel-popup__dimensions">
-           <div class="vessel-popup__dimension-item"><span>Length: </span> <span class="vessel-popup__dimension-value"> ${vessel.staticData.dimensions.length}m</span></div>
-          <div class="vessel-popup__dimension-item"><span>Width:</span> <span class="vessel-popup__dimension-value"> ${vessel.staticData.dimensions.width}m</span></div>
+           <div class="vessel-popup__dimension-item"><span>Length: </span> <span class="vessel-popup__dimension-value"> ${
+             vessel.staticData.dimensions.length
+           }m</span></div>
+          <div class="vessel-popup__dimension-item"><span>Width:</span> <span class="vessel-popup__dimension-value"> ${
+            vessel.staticData.dimensions.width
+          }m</span></div>
         </div>
       </div>
       <div class="vessel-popup__item">
         <span class="vessel-popup__label">Last update:</span>
-        <span class="vessel-popup__value">${new Date(vessel.lastPositionUpdate.timestamp).toLocaleString()}</span>
+        <span class="vessel-popup__value">${new Date(
+          vessel.lastPositionUpdate.timestamp
+        ).toLocaleString()}</span>
       </div>
       <div class="vessel-popup__item vessel-popup__item--coordinates">
         <span class="vessel-popup__label">Last Known Position:</span>
         <div class="vessel-popup__position">
-          <div class="vessel-popup__coordinate-item"><span>Lat:</span> <span class="vessel-popup__coordinate-value">${vessel.lastPositionUpdate.latitude}</span></div>
-          <div class="vessel-popup__coordinate-item"><span>Long:</span> <span class="vessel-popup__coordinate-value">${vessel.lastPositionUpdate.longitude}</span></div>
+          <div class="vessel-popup__coordinate-item"><span>Lat:</span> <span class="vessel-popup__coordinate-value">${
+            vessel.lastPositionUpdate.latitude
+          }</span></div>
+          <div class="vessel-popup__coordinate-item"><span>Long:</span> <span class="vessel-popup__coordinate-value">${
+            vessel.lastPositionUpdate.longitude
+          }</span></div>
         </div>
       </div>
       <div class="vessel-popup__item">
         <span class="vessel-popup__label">Destination:</span>
-        <span class="vessel-popup__value">${vessel.currentVoyage.destination || "N/A"}</span>
+        <span class="vessel-popup__value">${
+          vessel.currentVoyage.destination || "N/A"
+        }</span>
       </div>
       <div class="vessel-popup__item">
         <span class="vessel-popup__label">ETA:</span>
-        <span class="vessel-popup__value">${vessel.currentVoyage.eta ? new Date(vessel.currentVoyage.eta).toLocaleString() : "N/A"}</span>
+        <span class="vessel-popup__value">${
+          vessel.currentVoyage.eta
+            ? new Date(vessel.currentVoyage.eta).toLocaleString()
+            : "N/A"
+        }</span>
       </div>
     </div>
   </div>

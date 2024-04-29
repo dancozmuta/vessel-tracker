@@ -1,0 +1,4 @@
+<button class="app-button {{ customClass }}" (click)="handleClick()">
+  <span>{{ displayText }}</span>
+  <img *ngIf="iconSrc" [src]="iconSrc" class="app-button__icon" />
+</button>
