@@ -8,6 +8,13 @@
   --delay-time: 0.5s;
 }
 
+@function hex-to-rgba($hex, $alpha: 1) {
+  $r: red($hex);
+  $g: green($hex);
+  $b: blue($hex);
+  @return rgba($r, $g, $b, $alpha);
+}
+
 body {
   font-family: "Exo", sans-serif;
   font-weight: 400; /* Regular */
@@ -16,6 +23,21 @@ body {
   background-color: var(--color-gray);
   height: 100vh;
   overflow: hidden;
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  h1 {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin: 7px 0 0 0;
+  }
 
   .leaflet-container a.leaflet-popup-close-button {
     top: 5px;
@@ -54,6 +76,10 @@ body {
     }
   }
 
+  .enlarged-marker svg circle[cx="45.45"][cy="45.45"][r="40.24"] {
+    fill: var(--color-accent) !important;
+  }
+
   .leaflet-popup-tip-container {
     display: none;
   }
@@ -75,7 +101,7 @@ body {
 
       span {
         text-transform: none;
-        color: var(--color-accent);
+        color: var(--color-primary);
         line-height: 1;
         margin-left: 5px;
         font-weight: bold;
@@ -94,8 +120,12 @@ body {
   }
 
   .leaflet-popup-content {
-    width: 430px !important;
+    width: 357px !important;
     margin: 0;
+
+    @media (max-width: 600px) {
+      width: 285px !important;
+    }
   }
 
   .vessel-popup {
@@ -113,14 +143,12 @@ body {
 
     &__content {
       display: flex;
-      justify-content: space-between;
       padding: 20px;
     }
 
     &__column {
       display: flex;
       flex-direction: column;
-      flex-basis: 50%;
 
       &--left {
         border-right: 0.33px solid #c8c8c9;
@@ -158,6 +186,11 @@ body {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 10px;
+
+      @media (max-width: 600px) {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 0;
+      }
     }
 
     &__dimension-value,
@@ -208,6 +241,14 @@ body {
     100% {
       transform: translateY(0px) scaleY(1);
       opacity: 1;
+    }
+  }
+
+  /* Overwrite Leaflet popup styles on mobile */
+  @media (max-width: 767px) {
+    .leaflet-popup {
+      bottom: -37px !important;
+      left: -184px !important;
     }
   }
 }

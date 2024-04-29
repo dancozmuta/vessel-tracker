@@ -1,3 +1,10 @@
+@function hex-to-rgba($hex, $alpha: 1) {
+  $r: red($hex);
+  $g: green($hex);
+  $b: blue($hex);
+  @return rgba($r, $g, $b, $alpha);
+}
+
 :root {
   /* Base Neutral Colors */
   --color-white: #ffffff; /* Pure White, commonly used for backgrounds and text */

@@ -16,7 +16,7 @@ export class VesselService {
       {
         query: `
         query GetVessels($flag: [String!], $shipType: [ShipType!]) {
-          vessels(first: 15, flag: $flag, shipType: $shipType) {
+          vessels(first: 50, flag: $flag, shipType: $shipType) {
             nodes {
               id
               staticData {

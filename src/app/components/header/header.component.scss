@@ -12,8 +12,24 @@
     height: 25px;
   }
 
+  .container {
+    display: flex;
+    flex-direction: row;
+  }
+
   a {
     display: flex;
     align-items: center;
+  }
+
+  @media (max-width: 767px) {
+    img {
+      height: 22px;
+    }
+
+    h1 {
+      margin: 2px 0 0 0;
+      font-size: 16px;
+    }
   }
 }
