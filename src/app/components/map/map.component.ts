@@ -49,7 +49,7 @@ export class MapComponent implements OnInit {
   }
 
   private clearMarkers(): void {
-    this.markers.forEach(marker => marker.remove());
+    this.markers.forEach((marker) => marker.remove());
     this.markers = []; // Clear the array
   }
 
@@ -65,7 +65,9 @@ export class MapComponent implements OnInit {
         const marker = this.addMarker(lat, lon, vessel);
         if (marker) {
           this.markers.push(marker);
-          bounds = bounds ? bounds.extend(marker.getLatLng()) : L.latLngBounds(marker.getLatLng(), marker.getLatLng());
+          bounds = bounds
+            ? bounds.extend(marker.getLatLng())
+            : L.latLngBounds(marker.getLatLng(), marker.getLatLng());
         }
       }
     });
@@ -95,7 +97,7 @@ export class MapComponent implements OnInit {
                </div>`,
         className: "custom-marker",
         iconAnchor: [19, 60],
-        popupAnchor: [210, 90],
+        popupAnchor: [250, 120],
       });
 
       const marker = L.marker([lat, lon], { icon: customIcon }).addTo(this.map);
@@ -111,7 +113,7 @@ export class MapComponent implements OnInit {
       marker
         .bindPopup(this.generatePopupContent(vessel), {
           closeButton: true,
-          className: 'custom-popup'
+          className: "custom-popup",
         })
         .on("popupopen", (e) => {
           const icon = e.target._icon;
@@ -136,33 +138,63 @@ export class MapComponent implements OnInit {
       vessel.staticData.shipType || "Unknown"
     );
     return `
-      <div class="vessel-popup">
-        <strong>Name:</strong> ${vessel.staticData.name}<br>
-        <strong>MMSI:</strong> ${vessel.staticData.mmsi}<br>
-        <strong>IMO:</strong> ${vessel.staticData.imo}<br>
-        <strong>Type:</strong> ${formattedShipType}<br>
-        <strong>Country:</strong> ${vessel.staticData.flag}<br>
-        <strong>Call Sign:</strong> ${vessel.staticData.callsign}<br>
-        <strong>Dimensions:</strong> Length: ${
-          vessel.staticData.dimensions.length
-        }m, Width: ${vessel.staticData.dimensions.width}m<br>
-        <strong>Last update:</strong> ${new Date(
-          vessel.lastPositionUpdate.timestamp
-        ).toLocaleString()}<br>
-        <strong>Last Known Position:</strong> latitude: ${
-          vessel.lastPositionUpdate.latitude
-        }
-        longitude: ${vessel.lastPositionUpdate.longitude}
-        <br>
-        <strong>Destination:</strong> ${
-          vessel.currentVoyage.destination || "N/A"
-        }<br>
-        <strong>ETA:</strong> ${
-          vessel.currentVoyage.eta
-            ? new Date(vessel.currentVoyage.eta).toLocaleString()
-            : "N/A"
-        }<br>
+    <div class="vessel-popup">
+  <h1 class="vessel-popup__title">${vessel.staticData.name}</h1>
+
+  <div class="vessel-popup__content">
+    <div class="vessel-popup__column vessel-popup__column--left">
+      <div class="vessel-popup__item">
+        <span class="vessel-popup__label">Call Sign:</span>
+        <span class="vessel-popup__value">${vessel.staticData.callsign}</span>
       </div>
+      <div class="vessel-popup__item">
+        <span class="vessel-popup__label">MMSI:</span>
+        <span class="vessel-popup__value">${vessel.staticData.mmsi}</span>
+      </div>
+      <div class="vessel-popup__item">
+        <span class="vessel-popup__label">IMO:</span>
+        <span class="vessel-popup__value">${vessel.staticData.imo}</span>
+      </div>
+      <div class="vessel-popup__item">
+        <span class="vessel-popup__label">Type:</span>
+        <span class="vessel-popup__value">${formattedShipType}</span>
+      </div>
+      <div class="vessel-popup__item">
+        <span class="vessel-popup__label">Country:</span>
+        <span class="vessel-popup__value">${vessel.staticData.flag}</span>
+      </div>
+    </div>
+
+    <div class="vessel-popup__column vessel-popup__column--right">
+      <div class="vessel-popup__item vessel-popup__item--dimensions">
+        <span class="vessel-popup__label">Dimensions:</span>
+        <div class="vessel-popup__dimensions">
+           <div class="vessel-popup__dimension-item"><span>Length: </span> <span class="vessel-popup__dimension-value"> ${vessel.staticData.dimensions.length}m</span></div>
+          <div class="vessel-popup__dimension-item"><span>Width:</span> <span class="vessel-popup__dimension-value"> ${vessel.staticData.dimensions.width}m</span></div>
+        </div>
+      </div>
+      <div class="vessel-popup__item">
+        <span class="vessel-popup__label">Last update:</span>
+        <span class="vessel-popup__value">${new Date(vessel.lastPositionUpdate.timestamp).toLocaleString()}</span>
+      </div>
+      <div class="vessel-popup__item vessel-popup__item--coordinates">
+        <span class="vessel-popup__label">Last Known Position:</span>
+        <div class="vessel-popup__position">
+          <div class="vessel-popup__coordinate-item"><span>Lat:</span> <span class="vessel-popup__coordinate-value">${vessel.lastPositionUpdate.latitude}</span></div>
+          <div class="vessel-popup__coordinate-item"><span>Long:</span> <span class="vessel-popup__coordinate-value">${vessel.lastPositionUpdate.longitude}</span></div>
+        </div>
+      </div>
+      <div class="vessel-popup__item">
+        <span class="vessel-popup__label">Destination:</span>
+        <span class="vessel-popup__value">${vessel.currentVoyage.destination || "N/A"}</span>
+      </div>
+      <div class="vessel-popup__item">
+        <span class="vessel-popup__label">ETA:</span>
+        <span class="vessel-popup__value">${vessel.currentVoyage.eta ? new Date(vessel.currentVoyage.eta).toLocaleString() : "N/A"}</span>
+      </div>
+    </div>
+  </div>
+</div>
     `;
   }
 }
