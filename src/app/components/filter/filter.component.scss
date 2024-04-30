@@ -17,8 +17,8 @@
         @media (max-width: 767px) {
           position: sticky;
           top: 0;
-          background-color: inherit; // Match the parent background
-          z-index: 1000; // Ensure it's above other content
+          background-color: inherit; 
+          z-index: 1000;
         }
       }
   
@@ -35,7 +35,7 @@
   
         &:checked + .filter__label-option {
           text-decoration: underline;
-          color: #000; // Text color when selected
+          color: var(--color-accent);
         }
       }
   
