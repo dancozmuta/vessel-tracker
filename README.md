@@ -22,6 +22,28 @@ git clone https://github.com/dancozmuta/vessel-tracker
 ## 2.Install dependencies:
 npm install
 
+## 3.Configure Environment (!!!! IMPORTANT)
+
+Before running the application, you must configure the environment files. 
+
+Rename the environment.template.ts to environment.ts and environment.prod.template.ts to environment.prod.ts, then update them with your specific configurations.
+
+EXAMPLE: 
+
+// environment.ts
+
+export const environment = {
+  production: false,
+  bearerToken: 'YOUR_BEARER_TOKEN'
+};
+
+// environment.prod.ts
+
+export const environment = {
+  production: true,
+  bearerToken: 'YOUR_BEARER_TOKEN'
+};
+
 # DEVELOPMENT COMMANDS
 ng serve
 

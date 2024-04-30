@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, catchError, of, tap } from "rxjs";
+import { Observable } from "rxjs";
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: "root",
@@ -56,7 +57,7 @@ export class VesselService {
       {
         headers: new HttpHeaders({
           "Content-Type": "application/json",
-          Authorization: "Bearer UsDcIhrr1wzrVDyksn0NUm47vSgt2zNV",
+          Authorization: `Bearer ${environment.bearerToken}`,
         }),
       }
     );
