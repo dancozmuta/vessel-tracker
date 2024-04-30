@@ -1,27 +1,38 @@
 # VesselTracker
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.3.
+# INTRODUCTION
+Vessel Tracker is a web application designed to display maritime vessel data dynamically on a map interface. It utilizes Angular 17.3.3 for frontend development and integrates with a GraphQL API for real-time maritime data. This project was created by Dan Cozmuta as part of a coding challenge.
 
-## Development server
+# FEATURES 
+Real-time display of vessel positions on a map.
+Detailed vessel information such as dimensions, type, flag, and more.
+Ability to filter vessels by type.
+Responsive design accommodating various viewports.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+# TECHNOLOGY STACK
+Angular: Version 17.3.3
+Leaflet: For mapping functionalities.
+GraphQL: For API integration.
 
-## Code scaffolding
+# SETUP AND INSTALLATION
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## 1.Clone the repository:
+git clone https://github.com/dancozmuta/vessel-tracker
 
-## Build
+## 2.Install dependencies:
+npm install
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+# DEVELOPMENT COMMANDS
+ng serve
 
-## Running unit tests
+Visit http://localhost:4200/ to view the application. To test on mobile devices, use:
+ng serve --host 0.0.0.0
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+# Author
+Dan Cozmuta
 
-## Running end-to-end tests
+# Acknowledgments
+Angular CLI Documentation
+Leaflet.js
+GraphQL
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

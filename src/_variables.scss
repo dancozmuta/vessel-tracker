@@ -6,16 +6,16 @@
 }
 
 :root {
-  --color-white: #ffffff; 
-  --color-dark: #04060f; 
+  --color-white: #ffffff;
+  --color-dark: #04060f;
   --color-gray: #f2f2f2;
+  --color-line: #c8c8c9 ;
 
   /* Brand Colors */
   --color-primary: #be0000; /* Spire Red changed because ther provided color #e2e2e2 was a gray */
-  --color-secondary: #0f447a; 
-  --color-accent: #008081; 
-  --color-supportive: #00806c; 
-
+  --color-secondary: #0f447a;
+  --color-accent: #008081;
+  --color-supportive: #00806c;
 
   /* Additional Semantic Colors */
   --color-background: var(--color-white); /* Default background color */

@@ -57,7 +57,7 @@ export class FilterComponent implements OnInit {
   }
 
   onShipTypeChange(type: string): void {
-    this.selectedType = type; // Assuming there's a `selectedType` to hold the current selection
+    this.selectedType = type;
     this.shipTypeChanged.emit(this.selectedType);
   }
 
